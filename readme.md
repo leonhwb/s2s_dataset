@@ -2,7 +2,7 @@
 > 对于延伸期研究，项目文档和ECMWF的官方文档时能解决大部分问题，但仍需要花时间研究数据       
 > 综述《中国气象局S2S数据归档中心设计及关键技术_肖华东》 
 
-### 需要在s2s_dataloader\s2s_download下创建文件config.json，配置下载的路径
+需要在s2s_dataloader\s2s_download下创建文件config.json，配置下载的路径
 ```json
 {
   "s2s_root": "..."
@@ -23,7 +23,7 @@ s2s资料官方文档（需要详细参考）：https://confluence.ecmwf.int/dis
 
 ## 回算数据和预报数据的参数说明
 详细参考：   
-https://confluence.ecmwf.int/display/S2S/Models   
+模型版本：https://confluence.ecmwf.int/display/S2S/Models     
 https://confluence.ecmwf.int/display/S2S/A+brief+description+of+reforecasts   
 
 ### 近实时预报数据
@@ -95,7 +95,7 @@ S2S数据有多个数据来源data_center：
  1. 起报日期，ecmf和babj每周一和周四起报一次；kwbc每天都有起报
  2. 要素垂直速度w，ecmf和babj有10层；kwbc只有1层（500hpa）
  3. 预报时效的不同
- 4. 集合成员数量
+ 4. 集合成员数量   
  5. 某些要素的预报场第0天的确实情况   
  - 上述差异特别是第5点，影响数据的后处理，请认真阅读S2SDataset.s2s_download和S2SDataset.s2s_dataloader下的脚本  
  - 对于不同中心的S2S资料的后处理过程在S2SDataset.s2s_dataloader的各个子文件夹下的readme.md有详细说明，务必认真阅读
