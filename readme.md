@@ -127,23 +127,3 @@ S2S数据有多个数据来源data_center：
 s2s_{data_center}_{number}_{init_date}_{parameter}{level}.grib  
 如果parameter是单层要素，则level置为空字符串
 ```
-
-# 使用说明
-首先需要导入S2S数据的模块路径，添加本项目的上一级目录
-```python
-import sys
-```
-
-## 读取S2S数据
-
-```python
-from S2SDataset.s2s_dataloader import S2SRealtime
-
-```
-
-
-## 下载S2S数据
-```python
-from S2SDataset.s2s_download import RealTimeGribFileConfig
-
-```
