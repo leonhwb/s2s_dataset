@@ -2,6 +2,13 @@
 > 对于延伸期研究，项目文档和ECMWF的官方文档时能解决大部分问题，但仍需要花时间研究数据       
 > 综述《中国气象局S2S数据归档中心设计及关键技术_肖华东》 
 
+### 需要在s2s_dataloader\s2s_download下创建文件config.json，配置下载的路径
+```json
+{
+  "s2s_root": "..."
+}
+```
+
 ## S2S数据下载
  - 利用欧洲中心的ecmwfapi库进行下载。安装方式：https://pypi.org/project/ecmwf-api-client/  
  - ecmwfapi需要在个人账号下配置密钥文件.ecmwfapirc,相关教程可以网上搜索，十分简单。
