@@ -6,7 +6,7 @@
 0~60天，共61天，每个模式（cf或pf）共预报未来60个场（第0天不算预报）。   
 参考：https://confluence.ecmwf.int/display/S2S/CMA+model+description   
 海温wtmp和2t缺失第0天的数据。      
-mn2t6、mx2t6、tp的预报间隔是6小时。      
+mn2t6、mx2t6、tp的预报间隔是6小时。   
 * mn2t6,mx2t6,tp缺失第0天0时，缺失61天6、12、18时。共61*4-4=240个场。
 
 
