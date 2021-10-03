@@ -236,7 +236,7 @@ class ReforecastGrib_OnTheFly_FileConfig:
     def init_date_range(cls, **kwargs) -> List[str]:
         dir = cls.factor_dir(**kwargs)
         if os.path.exists(dir):
-            return [f.split('_')[3] for f in os.listdir(dir) if f.endswith('.grib')]
+            return [f.split('_')[4] for f in os.listdir(dir) if f.endswith('.grib')]
         else:
             return []
 
