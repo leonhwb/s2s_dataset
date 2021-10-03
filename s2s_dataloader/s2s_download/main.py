@@ -216,7 +216,7 @@ class ReforecastGrib_OnTheFly_FileConfig:
 
     forecast_type = 'reforecast'
     data_center = ('ecmf', 'babj')
-    pfEnsNums = {'ecmf': 10, 'babj': 0}  # 扰动模式的数量
+    pfEnsNums = {'ecmf': 10, 'babj': 3}  # 扰动模式的数量
     rfc_periods = {'ecmf': 20, 'babj': 15}  # 回算历史年数
 
     @classmethod
