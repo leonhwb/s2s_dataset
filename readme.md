@@ -121,9 +121,3 @@ S2S数据有多个数据来源data_center：
  ┣ 📂kwbc
  ┣ 📂 
 ```
-### 文件命名规则：
-近实时预报：  
-```
-s2s_{data_center}_{number}_{init_date}_{parameter}{level}.grib  
-如果parameter是单层要素，则level置为空字符串
-```
