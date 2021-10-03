@@ -24,7 +24,11 @@ class KWBC_Realtime(S2SRealtimeBase):
             dataarray['step'] = dataarray['valid_time'] - dataarray['time']
 
         elif parameter == 'tp':
+            head = dataarray[0]
+            head['step'] = pd.to_timedelta(0, unit='day')
+            dataarray = xr.concat([head, dataarray[3::4, :, :]], dim='step')
             dataarray = dataarray.diff(dim='step')
+            dataarray['step'] = pd.to_timedelta(dataarray['step'].data) - pd.to_timedelta(1, unit='d')
             dataarray = dataarray.where(dataarray > 0, 0)
 
         return dataarray
