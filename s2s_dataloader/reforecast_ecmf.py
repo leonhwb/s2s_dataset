@@ -1,12 +1,12 @@
-from .template import S2SRealtimeBase
+from template import S2SOnTheFlyReforecastBase
 import xarray as xr
 import pandas as pd
 
 
-class ECMF_Realtime(S2SRealtimeBase):
+class ECMF_Reforecast(S2SOnTheFlyReforecastBase):
 
     def __init__(self):
-        S2SRealtimeBase.__init__(self, data_center='ecmf')
+        S2SOnTheFlyReforecastBase.__init__(self, data_center='ecmf')
 
     def post_process(self, dataarray: xr.DataArray, parameter: str):
         """
@@ -32,10 +32,11 @@ class ECMF_Realtime(S2SRealtimeBase):
 
 
 if __name__ == "__main__":
-    obj = ECMF_Realtime()
-    print(obj.init_date_range('2t', 'tp', 't500'))
+    obj = ECMF_Reforecast()
+    obj.load('tp', cal_date='20190401')
+    print(obj.cal_date_range('2t', 'tp', number=0))
     for param_ll in ('mn2t6', 'mx2t6', '2t', 'tp', '10u', '10v', 'msl', 'sp', 'wtmp',
                      'u500', 'v500', 'w500', 'gh500', 'q500', 't500'):
-        print(param_ll, obj.load(parameter_level=param_ll, init_date='20210104').shape)
-    data = obj.load(parameter_level='10v', init_date='20210104')
+        print(param_ll, obj.load(parameter_level=param_ll, cal_date='20210104').shape)
+    data = obj.load(parameter_level='10v', cal_date='20210104')
     obj.post_process(data, parameter='10v')
