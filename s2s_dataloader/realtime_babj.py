@@ -1,4 +1,4 @@
-from template import S2SRealtimeBase
+from .template import S2SRealtimeBase
 import xarray as xr
 import pandas as pd
 
