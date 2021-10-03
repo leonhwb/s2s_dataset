@@ -1,4 +1,4 @@
-from .template import S2SRealtimeBase
+from template import S2SRealtimeBase
 import xarray as xr
 import pandas as pd
 
@@ -24,14 +24,19 @@ class BABJ_Realtime(S2SRealtimeBase):
             dataarray['step'] = dataarray['valid_time'] - dataarray['time']
 
         elif parameter == 'tp':
-           dataarray = dataarray.diff(dim='step')
-           dataarray = dataarray.where(dataarray > 0, 0)
+            head = dataarray[0]
+            head['step'] = pd.to_timedelta(0, unit='day')
+            dataarray = xr.concat([head, dataarray[3::4, :, :]], dim='step')
+            dataarray = dataarray.diff(dim='step')
+            dataarray['step'] = pd.to_timedelta(dataarray['step'].data) - pd.to_timedelta(1, unit='d')
+            dataarray = dataarray.where(dataarray > 0, 0)
 
         return dataarray
 
 
 if __name__ == "__main__":
     obj = BABJ_Realtime()
+    obj.load('tp', '20210701', 0)
     print(obj.init_date_range('2t', 'tp', 't500'))
     # data = obj.load(parameter_level='mx2t6', init_date='20210701')
     # obj.post_process(data, parameter='mx2t6')
