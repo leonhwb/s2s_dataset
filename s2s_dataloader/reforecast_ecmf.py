@@ -1,4 +1,4 @@
-from template import S2SOnTheFlyReforecastBase
+from .template import S2SOnTheFlyReforecastBase
 import xarray as xr
 import pandas as pd
 
