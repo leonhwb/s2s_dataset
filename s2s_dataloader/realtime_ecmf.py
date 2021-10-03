@@ -24,7 +24,7 @@ class ECMF_Realtime(S2SRealtimeBase):
             dataarray['step'] = dataarray['valid_time'] - dataarray['time']
 
         elif parameter == 'tp':
-            dataarray = dataarray[:, ::4, :, :].diff(dim='step')
+            dataarray = dataarray[::4, :, :].diff(dim='step')
             dataarray['step'] = pd.to_timedelta(dataarray['step'].data) - pd.to_timedelta(1, unit='d')
             dataarray = dataarray.where(dataarray > 0, 0)
 
