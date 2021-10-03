@@ -18,8 +18,7 @@
 - kwbc的近实时预报数据，逐6小时的要素后处理：
      * 累积降水tp：    
         Validity：accumulated from the beginning of the forecast   
-        例如:1 days 00:00:00的降水场表示1 days 00:00:00 ~ 1 days 06:00:00这段时间的累积降水量
-        获取某日总降水量需要对每日0h,6h,12h,18h的降水场进行求和
+         从第0个时次起，逐6小时累积的降水量，取出所有的00:00场做差值，1day00:00和0day00:00相减得到第0天总降雨量
         (参考网址：https://confluence.ecmwf.int/display/S2S/S2S+Total+Precipitation)
      * 最高气温mx2t6,最低气温mn2t6：  
      官网下载页面描述为：数据中每个valid_time的过去6小时的最高最低气温
