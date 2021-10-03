@@ -19,6 +19,7 @@ mn2t6、mx2t6、tp的预报间隔是6小时。
         Validity：accumulated from the beginning of the forecast   
         从第0个时次起，逐6小时累积的降水量，取出所有的00:00场做差值，1day00:00和0day00:00相减得到第0天总降雨量
         (参考网址：https://confluence.ecmwf.int/display/S2S/S2S+Total+Precipitation)
+        > 欧洲中心的累积降水，做差分后有负数，不知道是什么原因
      * 最高气温mx2t6,最低气温mn2t6：  
      官网下载页面描述为：数据中每个valid_time的过去6小时的最高最低气温
         + Maximum temperature at 2 metres in the last 6 hours    
