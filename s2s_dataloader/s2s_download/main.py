@@ -211,7 +211,7 @@ class ReforecastGrib_OnTheFly_FileConfig:
         > 共有20个起报日期，都是7月1日。从这20个起报日期，产生11个预报成员，每个预报成员预报共47，与近实时预报相同。
     则在下载时，固定某个成员，把2020-07-01、2019-07-01、...、2001-07-01的历史上的预报都一次性下载到一个文件夹
     
-    这里的init_date实际上是下载页面中的Model version date
+    注意：这里的init_date实际上是下载页面中的Model version date
     """
 
     forecast_type = 'reforecast'
@@ -231,6 +231,14 @@ class ReforecastGrib_OnTheFly_FileConfig:
                             data_center,
                             cls.forecast_type,
                             str(number), f'{parameter}{str(level)}')
+
+    @classmethod
+    def init_date_range(cls, **kwargs) -> List[str]:
+        dir = cls.factor_dir(**kwargs)
+        if os.path.exists(dir):
+            return [f.split('_')[3] for f in os.listdir(dir) if f.endswith('.grib')]
+        else:
+            return []
 
     @classmethod
     def factor_save_filename(cls,
