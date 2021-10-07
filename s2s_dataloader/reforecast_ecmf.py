@@ -26,6 +26,7 @@ class ECMF_Reforecast(S2SOnTheFlyReforecastBase):
         elif parameter == 'tp':
             dataarray = dataarray[:, ::4, :, :].diff(dim='step')
             dataarray['step'] = pd.to_timedelta(dataarray['step'].data) - pd.to_timedelta(1, unit='d')
+            dataarray['valid_time'] = dataarray['time'] + dataarray['step']
             dataarray = dataarray.where(dataarray > 0, 0)
 
         return dataarray
