@@ -36,3 +36,13 @@ def S2SRealtimeDownloader(data_center: Param.data_center, number=0):
             raise Exception(f'{data_center}的近实时预报扰动成员pf的数据下载器还没有开发')
     else:
         raise ValueError(f'成员号{number}错误')
+
+
+def S2SReforeacstDownloader(data_center: Param.data_center, number=0):
+    """工厂模式"""
+    if data_center == "ecmf":
+        return Download_ECMF_Reforecast(number=number)
+    elif data_center == "babj":
+        return Download_BABJ_Reforecast(number=number)
+    else:
+        raise Exception(f"{data_center}的会算数据下载器还没有开发")
