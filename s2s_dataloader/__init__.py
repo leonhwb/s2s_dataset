@@ -3,14 +3,14 @@ from .realtime_babj import BABJ_Realtime
 from .realtime_kwbc import KWBC_Realtime
 from .template import S2SRealtimeBase
 from .reforecast_ecmf import ECMF_Reforecast
-from .s2s_download import DownloadChecker, Download_BABJ_Reforecast, Download_ECMF_Reforecast
+from .s2s_download import DownloadChecker, S2SRealtimeDownloader, S2SReforeacstDownloader
 
 __all__ = ['S2SRealtime',
            'S2SRealtimeBase',
            'S2SReforecast',
-           "Download_ECMF_Reforecast",
-           "Download_BABJ_Reforecast",
-           "DownloadChecker"
+           "DownloadChecker",
+           "S2SRealtimeDownloader",
+           "S2SReforeacstDownloader"
            ]
 
 """
