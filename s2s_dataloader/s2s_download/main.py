@@ -231,11 +231,11 @@ class RealTimeGribDownload(ABC):
         """
         pass
 
-    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True, print=False) -> bool:
+    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True, is_print=False) -> bool:
         """
         :param init_date: 起报日期，字符串，YYYYMMDD
         :param parameter: 要素，参考Param.parameter
-        :param print: 是否输出ecmwfapi下载器的命令行输出信息
+        :param is_print: 是否输出ecmwfapi下载器的命令行输出信息
         :param level: 等压层
         :param no_cover: 默认不覆盖已经下载的文件
         :return: 下载成功返回True，否则返回False
@@ -246,7 +246,7 @@ class RealTimeGribDownload(ABC):
         # 文件不存在或者覆盖下载，则执行下载
         self.make_factor_dir(parameter=parameter, level=level)
 
-        with __hidden__.turnOn(print):
+        with __hidden__.turnOn(is_print):
             if level:
                 return self.retrieve_pressure_level(parameter=parameter,
                                                     level=level,
@@ -392,12 +392,12 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         """
         pass
 
-    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True, print=False) -> bool:
+    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True, is_print=False) -> bool:
         """
         :param init_date: 起报日期，字符串，YYYYMMDD
         :param parameter: 要素，参考Param.parameter
         :param level: 等压层
-        :param print: 是否输出ecmwfapi下载器的命令行输出信息
+        :param is_print: 是否输出ecmwfapi下载器的命令行输出信息
         :param no_cover: 默认不覆盖已经下载的文件
         :return: 下载成功返回True，否则返回False
         """
@@ -407,7 +407,7 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         # 文件不存在或者覆盖下载，则执行下载
         self.make_factor_dir(parameter=parameter, level=level)
 
-        with __hidden__.turnOn(print):
+        with __hidden__.turnOn(is_print):
             if level:
                 return self.retrieve_pressure_level(parameter=parameter,
                                                     level=level,
