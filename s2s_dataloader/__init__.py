@@ -3,10 +3,15 @@ from .realtime_babj import BABJ_Realtime
 from .realtime_kwbc import KWBC_Realtime
 from .template import S2SRealtimeBase
 from .reforecast_ecmf import ECMF_Reforecast
+from .s2s_download import DownloadChecker, Download_BABJ_Reforecast, Download_ECMF_Reforecast
 
 __all__ = ['S2SRealtime',
            'S2SRealtimeBase',
-           'S2SReforecast']
+           'S2SReforecast',
+           "Download_ECMF_Reforecast",
+           "Download_BABJ_Reforecast",
+           "DownloadChecker"
+           ]
 
 """
 单子模式（在多进程下可能不是，主要是为了减少内存开销），工厂模式
