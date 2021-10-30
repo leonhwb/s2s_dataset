@@ -60,6 +60,42 @@ class Param:
                 raise NameError(f'{parameter_level}中的{parameter}不在合法要素缩写{cls.parameter}中')
         return parameter, level
 
+    def step(self, data_center: str, parameter: str) -> int:
+        """
+        参考上级目录的readme说明，返回不同data_center和parameter的预报步长step
+        海温要素缩写兼容sst和wtmp
+        """
+        step = 0
+        if data_center == "ecmf":
+            if parameter in ("mn2t6", "mx2t6"):
+                step = 184  # ecmf的2m最高最低气温缺失第0天0时，缺失47天6、12、18时
+            elif parameter == "tp":
+                step = 185  # ecmf的累计降水缺少46天6、12、18时
+            elif parameter == "wtmp" or parameter == "sst":
+                step = 46  # ecmf的海温缺少了第0天
+            else:
+                step = 47
+
+        elif data_center == "babj":
+            if parameter in ("mn2t6", "mx2t6", "tp"):
+                step = 240  # babj的mn2t6,mx2t6,tp缺失第0天0时，缺失61天6、12、18时。共61*4-4=240个场
+            elif parameter in ("sst", "wtmp", "2t"):
+                step = 60  # babj的海温wtmp和2t缺失第0天的数据
+            else:
+                step = 61
+
+        elif data_center == "kwbc":
+            if parameter in ("mn2t6", "mx2t6", "tp"):
+                step = 176  # kwbc的mn2t6,mx2t6,tp缺失第0天0时，缺失44天6、12、18时
+            elif parameter in ('10u', '10v', 'sp'):
+                step = 44  # kwbc的10u,10v,sp缺失第0天的数据
+            elif parameter in ("wtmp", "2t"):
+                step = 43  # kwbc的海温wtmp和2t缺失第0,1天的数据
+            else:
+                step = 45
+
+        return step
+
 
 class RealTimeGribFileConfig:
     __root__ = __config__['s2s_root']
