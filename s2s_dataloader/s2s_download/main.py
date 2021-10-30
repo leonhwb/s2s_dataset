@@ -60,7 +60,8 @@ class Param:
                 raise NameError(f'{parameter_level}中的{parameter}不在合法要素缩写{cls.parameter}中')
         return parameter, level
 
-    def step(self, data_center: str, parameter: str) -> int:
+    @classmethod
+    def step(cls, data_center: str, parameter: str) -> int:
         """
         参考上级目录的readme说明，返回不同data_center和parameter的预报步长step
         海温要素缩写兼容sst和wtmp
