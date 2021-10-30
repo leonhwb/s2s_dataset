@@ -117,6 +117,7 @@ class HiddenPrints:
         self.state = state
         return self
 
+
 __hidden__ = HiddenPrints()
 
 
@@ -231,7 +232,8 @@ class RealTimeGribDownload(ABC):
         """
         pass
 
-    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True, is_print=False) -> bool:
+    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True,
+                 is_print=False) -> bool:
         """
         :param init_date: 起报日期，字符串，YYYYMMDD
         :param parameter: 要素，参考Param.parameter
@@ -392,7 +394,8 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         """
         pass
 
-    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True, is_print=False) -> bool:
+    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True,
+                 is_print=False) -> bool:
         """
         :param init_date: 起报日期，字符串，YYYYMMDD
         :param parameter: 要素，参考Param.parameter
