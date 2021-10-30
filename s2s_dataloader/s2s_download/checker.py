@@ -1,8 +1,8 @@
 import sys
 import os
-from main import Param
-from main import ReforecastGrib_OnTheFly_FileConfig as ReforecastConfig
-from main import RealTimeGribFileConfig as RealtimeConfig
+from .main import Param
+from .main import ReforecastGrib_OnTheFly_FileConfig as ReforecastConfig
+from .main import RealTimeGribFileConfig as RealtimeConfig
 import xarray as xr
 
 """用于检测下载文件的大小"""
