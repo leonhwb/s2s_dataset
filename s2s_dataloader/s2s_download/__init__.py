@@ -41,8 +41,14 @@ def S2SRealtimeDownloader(data_center: Param.data_center, number=0):
 def S2SReforeacstDownloader(data_center: Param.data_center, number=0):
     """工厂模式"""
     if data_center == "ecmf":
-        return Download_ECMF_Reforecast(number=number)
+        if 0 <= number <= ReforecastGrib_OnTheFly_FileConfig.pfEnsNums[data_center] + 1:
+            return Download_ECMF_Reforecast(number=number)
+        else:
+            raise ValueError(f'成员号{number}错误')
     elif data_center == "babj":
-        return Download_BABJ_Reforecast(number=number)
+        if 0 <= number <= ReforecastGrib_OnTheFly_FileConfig.pfEnsNums[data_center] + 1:
+            return Download_BABJ_Reforecast(number=number)
+        else:
+            raise ValueError(f'成员号{number}错误')
     else:
-        raise Exception(f"{data_center}的会算数据下载器还没有开发")
+        raise Exception(f"{data_center}的历史回算数据下载器还没有开发")
