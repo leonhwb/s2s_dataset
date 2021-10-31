@@ -20,36 +20,44 @@ class HiddenPrints:
 
 class DownloadChecker:
     def __init__(self):
-        self.error_message = ""
+        self.message = ""
         self.data = None
+        self.state = None
+
+    def clear(self):
+        self.data = None
+        self.message = ""
+        self.state = None
 
     def check(self, grib_path: str, show_error=False) -> bool:
         """
         show_error展示cfgrib的错误信息，如果有的话
         """
-        self.data = None
-        self.error_message = ""
+        self.clear()
 
         if not os.path.exists(grib_path):
-            self.error_message = "文件不存在"
-            return False  # 文件不存在，即下载错误
-
-        data = None  # 打开文件
-        try:
-            if not show_error:
-                with HiddenPrints():  # 屏蔽cfgrib的错误信息
+            self.message = "文件不存在"
+            self.state = False  # 文件不存在，即下载错误
+        else:
+            data = None  # 打开文件
+            try:
+                if not show_error:
+                    with HiddenPrints():  # 屏蔽cfgrib的错误信息
+                        data = xr.open_dataarray(grib_path, engine="cfgrib")
+                else:
                     data = xr.open_dataarray(grib_path, engine="cfgrib")
+            except:
+                pass
+
+            if data is None:
+                self.message = "文件读取失败，需要重新下载"
+                self.state = False
             else:
-                data = xr.open_dataarray(grib_path, engine="cfgrib")
-        except:
-            pass
+                self.data = data  # 暂存数据
+                self.message = "文件完整"
+                self.state = True
 
-        if data is None:
-            self.error_message = "文件读取失败，需要重新下载"
-            return False
-
-        self.data = data  # 暂存数据
-        return True
+        return self.state
 
     def checkRealtime(self,
                       data_center: str,
@@ -70,8 +78,9 @@ class DownloadChecker:
 
         valid_step = Param.step(data_center=data_center, parameter=parameter)
         if len(self.data["step"]) != valid_step:
-            self.error_message = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
+            self.message = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
                                  f'下载的文件中只有{len(self.data["step"])}个'
+            self.state = False
             return False
 
         return True
@@ -94,13 +103,15 @@ class DownloadChecker:
             history_year_num = len(self.data["time"])
             valid_rfc_year_num = ReforecastConfig.rfc_periods[data_center]
             if history_year_num != valid_rfc_year_num:
-                self.error_message = f"{data_center}回算{valid_rfc_year_num}年，下载文件中只有{history_year_num}年"
+                self.message = f"{data_center}回算{valid_rfc_year_num}年，下载文件中只有{history_year_num}年"
+                self.state = False
                 return False
 
         valid_step = Param.step(data_center=data_center, parameter=parameter)
         if len(self.data["step"]) != valid_step:
-            self.error_message = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
+            self.message = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
                                  f'下载的文件中只有{len(self.data["step"])}个'
+            self.state = False
             return False
 
         return True
