@@ -214,7 +214,7 @@ class _Test:
             print(f.split('.')[0],
                   data.name,
                   data.shape,
-                  data['number'].data)
+                  data['number'].__data__)
 
 
 if __name__ == "__main__":

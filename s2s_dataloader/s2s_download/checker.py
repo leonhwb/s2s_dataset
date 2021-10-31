@@ -20,14 +20,14 @@ class HiddenPrints:
 
 class DownloadChecker:
     def __init__(self):
-        self.message = ""
-        self.data = None
-        self.state = None
+        self.__message__ = ""
+        self.__data__ = None
+        self.__state__ = None
 
     def clear(self):
-        self.data = None
-        self.message = ""
-        self.state = None
+        self.__data__ = None
+        self.__message__ = ""
+        self.__state__ = None
 
     def check(self, grib_path: str, is_print=False) -> bool:
         """
@@ -36,8 +36,8 @@ class DownloadChecker:
         self.clear()
 
         if not os.path.exists(grib_path):
-            self.message = "文件不存在"
-            self.state = False  # 文件不存在，即下载错误
+            self.__message__ = "文件不存在"
+            self.__state__ = False  # 文件不存在，即下载错误
         else:
             data = None  # 打开文件
             try:
@@ -50,14 +50,14 @@ class DownloadChecker:
                 pass
 
             if data is None:
-                self.message = "文件读取失败，需要重新下载"
-                self.state = False
+                self.__message__ = "文件读取失败，需要重新下载"
+                self.__state__ = False
             else:
-                self.data = data  # 暂存数据
-                self.message = "文件完整"
-                self.state = True
+                self.__data__ = data  # 暂存数据
+                self.__message__ = "文件完整"
+                self.__state__ = True
 
-        return self.state
+        return self.__state__
 
     def checkRealtime(self,
                       data_center: str,
@@ -65,7 +65,7 @@ class DownloadChecker:
                       parameter: str,
                       level: int,
                       number: int = 0,
-                      is_print=False) -> bool:
+                      is_print=False):
         # 测试文件打开的情况
         grib_path = RealtimeConfig.factor_filepath(data_center=data_center,
                                                    init_date=init_date,
@@ -77,20 +77,20 @@ class DownloadChecker:
             return False
 
         valid_step = Param.step(data_center=data_center, parameter=parameter)
-        if len(self.data["step"]) != valid_step:
-            self.message = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
-                                 f'下载的文件中只有{len(self.data["step"])}个'
-            self.state = False
+        if len(self.__data__["step"]) != valid_step:
+            self.__message__ = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
+                                 f'下载的文件中只有{len(self.__data__["step"])}个'
+            self.__state__ = False
             return False
 
-        return True
+        return self.__state__, self.__message__
 
     def checkReforecast(self, data_center: str,
                         run_date: str,
                         parameter: str,
                         level: int,
                         number: int = 0,
-                        is_print=False) -> bool:
+                        is_print=False):
         grib_path = ReforecastConfig.factor_filepath(data_center=data_center,
                                                      init_date=run_date,
                                                      parameter=parameter,
@@ -100,18 +100,18 @@ class DownloadChecker:
             return False
 
         if data_center in ("babj", "ecmf"):
-            history_year_num = len(self.data["time"])
+            history_year_num = len(self.__data__["time"])
             valid_rfc_year_num = ReforecastConfig.rfc_periods[data_center]
             if history_year_num != valid_rfc_year_num:
-                self.message = f"{data_center}回算{valid_rfc_year_num}年，下载文件中只有{history_year_num}年"
-                self.state = False
+                self.__message__ = f"{data_center}回算{valid_rfc_year_num}年，下载文件中只有{history_year_num}年"
+                self.__state__ = False
                 return False
 
         valid_step = Param.step(data_center=data_center, parameter=parameter)
-        if len(self.data["step"]) != valid_step:
-            self.message = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
-                                 f'下载的文件中只有{len(self.data["step"])}个'
-            self.state = False
+        if len(self.__data__["step"]) != valid_step:
+            self.__message__ = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
+                                 f'下载的文件中只有{len(self.__data__["step"])}个'
+            self.__state__ = False
             return False
 
-        return True
+        return self.__state__, self.__message__

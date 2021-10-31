@@ -191,7 +191,7 @@ class _Test:
         dir = os.path.dirname(__file__)
         for f in [f for f in os.listdir(dir) if f.endswith('grib')]:
             data = xr.open_dataarray(os.path.join(dir, f), engine='cfgrib')
-            print(f.split('.')[0], data.name,  data.shape, data['number'].data)
+            print(f.split('.')[0], data.name, data.shape, data['number'].__data__)
 
 
 if __name__ == "__main__":
