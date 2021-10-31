@@ -86,13 +86,13 @@ class DownloadChecker:
         return self.__state__, self.__message__
 
     def checkReforecast(self, data_center: str,
-                        run_date: str,
+                        cal_date: str,
                         parameter: str,
                         level: int,
                         number: int = 0,
                         is_print=False):
         grib_path = ReforecastConfig.factor_filepath(data_center=data_center,
-                                                     init_date=run_date,
+                                                     init_date=cal_date,
                                                      parameter=parameter,
                                                      number=number,
                                                      level=level)
