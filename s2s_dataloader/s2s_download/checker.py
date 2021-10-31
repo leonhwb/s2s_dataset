@@ -74,14 +74,14 @@ class DownloadChecker:
                                                    level=level)
 
         if not self.check(grib_path, is_print=is_print):
-            return False
+            return self.__state__, self.__message__
 
         valid_step = Param.step(data_center=data_center, parameter=parameter)
         if len(self.__data__["step"]) != valid_step:
             self.__message__ = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
                                  f'下载的文件中只有{len(self.__data__["step"])}个'
             self.__state__ = False
-            return False
+            return self.__state__, self.__message__
 
         return self.__state__, self.__message__
 
@@ -96,8 +96,8 @@ class DownloadChecker:
                                                      parameter=parameter,
                                                      number=number,
                                                      level=level)
-        if not self.check(grib_path, is_print=is_print):
-            return False
+        if self.check(grib_path, is_print=is_print):
+            return self.__state__, self.__message__
 
         if data_center in ("babj", "ecmf"):
             history_year_num = len(self.__data__["time"])
@@ -105,13 +105,13 @@ class DownloadChecker:
             if history_year_num != valid_rfc_year_num:
                 self.__message__ = f"{data_center}回算{valid_rfc_year_num}年，下载文件中只有{history_year_num}年"
                 self.__state__ = False
-                return False
+                return self.__state__, self.__message__
 
         valid_step = Param.step(data_center=data_center, parameter=parameter)
         if len(self.__data__["step"]) != valid_step:
             self.__message__ = f'{data_center}的要素{parameter}共预报{valid_step}个场，' \
                                  f'下载的文件中只有{len(self.__data__["step"])}个'
             self.__state__ = False
-            return False
+            return self.__state__, self.__message__
 
         return self.__state__, self.__message__
