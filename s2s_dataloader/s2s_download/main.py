@@ -241,6 +241,9 @@ class RealTimeGribDownload(ABC):
             下载成功则返回True和"success"或"The file has already been downloaded"
             下载失败则返回False和错误信息
         """
+        if parameter in Param.single_level_parameter:
+            level = None  # 单层要素level强制转为None
+
         save_path = self.factor_path(init_date=init_date, parameter=parameter, level=level)
         if os.path.exists(save_path) and no_cover:  # 文件已经被下载且指定不覆盖
             return True, "The file has already been downloaded"
@@ -417,6 +420,9 @@ class ReforecastGrib_OnTheFly_Download(ABC):
             下载成功则返回True和"success"或"The file has already been downloaded"
             下载失败则返回False和错误信息
         """
+        if parameter in Param.single_level_parameter:
+            level = None  # 单层要素level强制转为None
+
         save_path = self.factor_path(init_date=init_date, parameter=parameter, level=level)
         if os.path.exists(save_path) and no_cover:  # 文件已经被下载且指定不覆盖
             return True, "The file has already been downloaded"
