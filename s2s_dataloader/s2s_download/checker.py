@@ -96,7 +96,7 @@ class DownloadChecker:
                                                      parameter=parameter,
                                                      number=number,
                                                      level=level)
-        if self.check(grib_path, is_print=is_print):
+        if not self.check(grib_path, is_print=is_print):
             return self.__state__, self.__message__
 
         if data_center in ("babj", "ecmf"):
