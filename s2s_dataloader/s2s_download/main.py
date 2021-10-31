@@ -101,6 +101,7 @@ class Param:
 
 class HiddenPrints:
     """屏蔽内层函数的命令行输出"""
+
     def __init__(self, state):
         self.state = state
 
@@ -227,7 +228,7 @@ class RealTimeGribDownload(ABC):
         pass
 
     def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True,
-                 is_print=False) -> bool:
+                 is_print=False):
         """
         :param init_date: 起报日期，字符串，YYYYMMDD
         :param parameter: 要素，参考Param.parameter
@@ -243,15 +244,22 @@ class RealTimeGribDownload(ABC):
         self.make_factor_dir(parameter=parameter, level=level)
 
         with HiddenPrints(not is_print):
-            if level:
-                return self.retrieve_pressure_level(parameter=parameter,
-                                                    level=level,
-                                                    init_date=init_date,
-                                                    save_path=save_path)
-            else:
-                return self.retrieve_single_level(init_date=init_date,
-                                                  parameter=parameter,
-                                                  save_path=save_path)
+            try:
+                if level:
+                    state = self.retrieve_pressure_level(parameter=parameter,
+                                                         level=level,
+                                                         init_date=init_date,
+                                                         save_path=save_path)
+                else:
+                    state = self.retrieve_single_level(init_date=init_date,
+                                                       parameter=parameter,
+                                                       save_path=save_path)
+                message = "success"
+            except Exception as e:
+                message = e
+                state = False
+
+        return state, message
 
 
 class ReforecastGrib_OnTheFly_FileConfig:
@@ -389,7 +397,7 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         pass
 
     def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True,
-                 is_print=False) -> bool:
+                 is_print=False):
         """
         :param init_date: 起报日期，字符串，YYYYMMDD
         :param parameter: 要素，参考Param.parameter
@@ -405,15 +413,22 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         self.make_factor_dir(parameter=parameter, level=level)
 
         with HiddenPrints(not is_print):
-            if level:
-                return self.retrieve_pressure_level(parameter=parameter,
-                                                    level=level,
-                                                    init_date=init_date,
-                                                    save_path=save_path)
-            else:
-                return self.retrieve_single_level(init_date=init_date,
-                                                  parameter=parameter,
-                                                  save_path=save_path)
+            try:
+                if level:
+                    state = self.retrieve_pressure_level(parameter=parameter,
+                                                         level=level,
+                                                         init_date=init_date,
+                                                         save_path=save_path)
+                else:
+                    state = self.retrieve_single_level(init_date=init_date,
+                                                       parameter=parameter,
+                                                       save_path=save_path)
+                message = "success"
+            except Exception as e:
+                message = e
+                state = False
+
+        return state, message
 
 
 if __name__ == "__main__":
