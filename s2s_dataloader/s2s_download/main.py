@@ -242,7 +242,7 @@ class RealTimeGribDownload(ABC):
         # 文件不存在或者覆盖下载，则执行下载
         self.make_factor_dir(parameter=parameter, level=level)
 
-        with HiddenPrints(is_print):
+        with HiddenPrints(not is_print):
             if level:
                 return self.retrieve_pressure_level(parameter=parameter,
                                                     level=level,
@@ -404,7 +404,7 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         # 文件不存在或者覆盖下载，则执行下载
         self.make_factor_dir(parameter=parameter, level=level)
 
-        with HiddenPrints(is_print):
+        with HiddenPrints(not is_print):
             if level:
                 return self.retrieve_pressure_level(parameter=parameter,
                                                     level=level,
