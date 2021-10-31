@@ -236,6 +236,10 @@ class RealTimeGribDownload(ABC):
         :param level: 等压层
         :param no_cover: 默认不覆盖已经下载的文件
         :return: 下载成功返回True，否则返回False
+        Return:
+            返回state,message
+            下载成功则返回True和"success"
+            下载失败则返回False和错误信息
         """
         save_path = self.factor_path(init_date=init_date, parameter=parameter, level=level)
         if os.path.exists(save_path) and no_cover:  # 文件已经被下载且指定不覆盖
@@ -383,6 +387,10 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         :param init_date: 起报日期，字符串，YYYYMMDD
         :param parameter: 要素，参考Param.parameter
         :param level: 等压层, 需要开发人员研究指定data_center和data_type的多层要素的等压层取值
+        Return:
+            返回state,message
+            下载成功则返回True和"success"
+            下载失败则返回False和错误信息
         """
         pass
 
