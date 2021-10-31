@@ -238,12 +238,12 @@ class RealTimeGribDownload(ABC):
         :return: 下载成功返回True，否则返回False
         Return:
             返回state,message
-            下载成功则返回True和"success"
+            下载成功则返回True和"success"或"The file has already been downloaded"
             下载失败则返回False和错误信息
         """
         save_path = self.factor_path(init_date=init_date, parameter=parameter, level=level)
         if os.path.exists(save_path) and no_cover:  # 文件已经被下载且指定不覆盖
-            return True
+            return True, "The file has already been downloaded"
         # 文件不存在或者覆盖下载，则执行下载
         self.make_factor_dir(parameter=parameter, level=level)
 
@@ -412,11 +412,14 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         :param level: 等压层
         :param is_print: 是否输出ecmwfapi下载器的命令行输出信息
         :param no_cover: 默认不覆盖已经下载的文件
-        :return: 下载成功返回True，否则返回False
+        Return:
+            返回state,message
+            下载成功则返回True和"success"或"The file has already been downloaded"
+            下载失败则返回False和错误信息
         """
         save_path = self.factor_path(init_date=init_date, parameter=parameter, level=level)
         if os.path.exists(save_path) and no_cover:  # 文件已经被下载且指定不覆盖
-            return True
+            return True, "The file has already been downloaded"
         # 文件不存在或者覆盖下载，则执行下载
         self.make_factor_dir(parameter=parameter, level=level)
 
