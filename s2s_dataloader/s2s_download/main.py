@@ -73,8 +73,8 @@ class Param:
                 step = 184  # ecmf的2m最高最低气温缺失第0天0时，缺失47天6、12、18时
             elif parameter == "tp":
                 step = 185  # ecmf的累计降水缺少46天6、12、18时
-            elif parameter == "wtmp" or parameter == "sst":
-                step = 46  # ecmf的海温缺少了第0天
+            elif parameter in ("wtmp", "sst", "2t"):
+                step = 46  # ecmf的海温缺少了第0天，2t也是
             else:
                 step = 47
 
