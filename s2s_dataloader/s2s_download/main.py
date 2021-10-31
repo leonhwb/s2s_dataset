@@ -101,7 +101,8 @@ class Param:
 
 class HiddenPrints:
     """屏蔽内层函数的命令行输出"""
-    state = True
+    def __init__(self, state):
+        self.state = state
 
     def __enter__(self):
         if self.state:
@@ -112,13 +113,6 @@ class HiddenPrints:
         if self.state:
             sys.stdout.close()
             sys.stdout = self._original_stdout
-
-    def turnOn(self, state=True):
-        self.state = state
-        return self
-
-
-__hidden__ = HiddenPrints()
 
 
 class RealTimeGribFileConfig:
@@ -248,7 +242,7 @@ class RealTimeGribDownload(ABC):
         # 文件不存在或者覆盖下载，则执行下载
         self.make_factor_dir(parameter=parameter, level=level)
 
-        with __hidden__.turnOn(is_print):
+        with HiddenPrints(is_print):
             if level:
                 return self.retrieve_pressure_level(parameter=parameter,
                                                     level=level,
@@ -410,7 +404,7 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         # 文件不存在或者覆盖下载，则执行下载
         self.make_factor_dir(parameter=parameter, level=level)
 
-        with __hidden__.turnOn(is_print):
+        with HiddenPrints(is_print):
             if level:
                 return self.retrieve_pressure_level(parameter=parameter,
                                                     level=level,

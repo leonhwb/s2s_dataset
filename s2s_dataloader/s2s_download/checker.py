@@ -29,7 +29,7 @@ class DownloadChecker:
         self.message = ""
         self.state = None
 
-    def check(self, grib_path: str, show_error=False) -> bool:
+    def check(self, grib_path: str, is_print=False) -> bool:
         """
         show_error展示cfgrib的错误信息，如果有的话
         """
@@ -41,7 +41,7 @@ class DownloadChecker:
         else:
             data = None  # 打开文件
             try:
-                if not show_error:
+                if not is_print:
                     with HiddenPrints():  # 屏蔽cfgrib的错误信息
                         data = xr.open_dataarray(grib_path, engine="cfgrib")
                 else:
@@ -65,7 +65,7 @@ class DownloadChecker:
                       parameter: str,
                       level: int,
                       number: int = 0,
-                      show_error=False) -> bool:
+                      is_print=False) -> bool:
         # 测试文件打开的情况
         grib_path = RealtimeConfig.factor_filepath(data_center=data_center,
                                                    init_date=init_date,
@@ -73,7 +73,7 @@ class DownloadChecker:
                                                    number=number,
                                                    level=level)
 
-        if not self.check(grib_path, show_error=show_error):
+        if not self.check(grib_path, is_print=is_print):
             return False
 
         valid_step = Param.step(data_center=data_center, parameter=parameter)
@@ -90,13 +90,13 @@ class DownloadChecker:
                         parameter: str,
                         level: int,
                         number: int = 0,
-                        show_error=False) -> bool:
+                        is_print=False) -> bool:
         grib_path = ReforecastConfig.factor_filepath(data_center=data_center,
                                                      init_date=run_date,
                                                      parameter=parameter,
                                                      number=number,
                                                      level=level)
-        if not self.check(grib_path, show_error=show_error):
+        if not self.check(grib_path, is_print=is_print):
             return False
 
         if data_center in ("babj", "ecmf"):
