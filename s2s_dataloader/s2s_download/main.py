@@ -407,10 +407,10 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         """
         pass
 
-    def download(self, *, init_date: str, parameter: Param.parameter, level=None, no_cover=True,
+    def download(self, *, cal_date: str, parameter: Param.parameter, level=None, no_cover=True,
                  is_print=False):
         """
-        :param init_date: 起报日期，字符串，YYYYMMDD
+        :param cal_date: 起报日期，字符串，YYYYMMDD
         :param parameter: 要素，参考Param.parameter
         :param level: 等压层
         :param is_print: 是否输出ecmwfapi下载器的命令行输出信息
@@ -423,7 +423,7 @@ class ReforecastGrib_OnTheFly_Download(ABC):
         if parameter in Param.single_level_parameter:
             level = None  # 单层要素level强制转为None
 
-        save_path = self.factor_path(init_date=init_date, parameter=parameter, level=level)
+        save_path = self.factor_path(init_date=cal_date, parameter=parameter, level=level)
         if os.path.exists(save_path) and no_cover:  # 文件已经被下载且指定不覆盖
             return True, "The file has already been downloaded"
         # 文件不存在或者覆盖下载，则执行下载
@@ -434,10 +434,10 @@ class ReforecastGrib_OnTheFly_Download(ABC):
                 if level:
                     state = self.retrieve_pressure_level(parameter=parameter,
                                                          level=level,
-                                                         init_date=init_date,
+                                                         init_date=cal_date,
                                                          save_path=save_path)
                 else:
-                    state = self.retrieve_single_level(init_date=init_date,
+                    state = self.retrieve_single_level(init_date=cal_date,
                                                        parameter=parameter,
                                                        save_path=save_path)
                 message = "success"
