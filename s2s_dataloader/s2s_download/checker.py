@@ -51,8 +51,13 @@ class DownloadChecker:
         self.data = data  # 暂存数据
         return True
 
-    def checkRealtime(self, data_center: str, parameter_level: str, init_date, number: int, show_error=False) -> bool:
-        parameter, level = Param.separate_FactorLevel(parameter_level)
+    def checkRealtime(self,
+                      data_center: str,
+                      init_date: str,
+                      parameter: str,
+                      level: int,
+                      number: int = 0,
+                      show_error=False) -> bool:
         # 测试文件打开的情况
         grib_path = RealtimeConfig.factor_filepath(data_center=data_center,
                                                    init_date=init_date,
@@ -71,8 +76,12 @@ class DownloadChecker:
 
         return True
 
-    def checkReforecast(self, data_center: str, parameter_level: str, run_date, number: int, show_error=False) -> bool:
-        parameter, level = Param.separate_FactorLevel(parameter_level)
+    def checkReforecast(self, data_center: str,
+                        run_date: str,
+                        parameter: str,
+                        level: int,
+                        number: int = 0,
+                        show_error=False) -> bool:
         grib_path = ReforecastConfig.factor_filepath(data_center=data_center,
                                                      init_date=run_date,
                                                      parameter=parameter,
