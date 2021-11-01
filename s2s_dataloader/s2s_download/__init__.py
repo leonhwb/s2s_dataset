@@ -38,7 +38,7 @@ def S2SRealtimeDownloader(data_center: Param.data_center, number=0):
         raise ValueError(f'成员号{number}错误')
 
 
-def S2SReforeacstDownloader(data_center: Param.data_center, number=0):
+def S2SReforecastDownloader(data_center: Param.data_center, number=0):
     """工厂模式"""
     if data_center == "ecmf":
         if 0 <= number <= ReforecastGrib_OnTheFly_FileConfig.pfEnsNums[data_center] + 1:

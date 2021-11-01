@@ -30,8 +30,8 @@ https://confluence.ecmwf.int/display/S2S/A+brief+description+of+reforecasts
 
 | 数据中心 | 预报时长 | 成员数 | 起报频率 |
 | -------- | -------- | ------ | ---------- |
-| ecmf     | day 0-46 | 3+1    | 周一，周四 |
-| babj     | day 0-60 | 50+1   | 周一，周四 |
+| ecmf     | day 0-46 | 50+1    | 周一，周四 |
+| babj     | day 0-60 | 3+1   | 周一，周四 |
 | kwbc     | day 0-44 | 15+1   | 每日     |
  
 ### 回算资料  
@@ -89,7 +89,7 @@ S2S数据有多个数据来源data_center：
  > 4 为了数据完整性
  > 5,6考虑下载速度，参考： https://confluence.ecmwf.int/display/WEBAPI/S2S+reforecasts+retrieval+efficiency 
  > 5 和周柏荃老师确认过，暂时得到结论：不同起报日期的同一number的扰动成员，扰动方案不变
- > 7
+
 
 ## 不同中心的之间的S2S资料差异
  1. 起报日期，ecmf和babj每周一和周四起报一次；kwbc每天都有起报
